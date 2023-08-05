@@ -3,15 +3,12 @@ const WebpackPwaManifest = require("webpack-pwa-manifest");
 const path = require("path");
 const { InjectManifest } = require("workbox-webpack-plugin");
 
-// TODO: Add and configure workbox plugins for a service worker and manifest file.
-// TODO: Add CSS loaders and babel to webpack.
-
 module.exports = () => {
 	return {
 		mode: "development",
 		entry: {
-			main: "./src/js/index.js",
-			install: "./src/js/install.js",
+			main: "./client/src/js/index.js",
+			install: "./client/src/js/install.js",
 		},
 		output: {
 			filename: "[name].bundle.js",
@@ -19,28 +16,27 @@ module.exports = () => {
 		},
 		plugins: [
 			new HtmlWebpackPlugin({
-				template: "./src/index.html",
+				template: "./client/src/index.html",
 				filename: "./index.html",
 			}),
 			new WebpackPwaManifest({
 				name: "Snippet PWA",
 				short_name: "Snippet",
-				description: "module 19 assignment, create a text editor",
+				description: "Module 19 assignment, create a text editor",
 				background_color: "#ffffff",
-				crossorigin: "use-credentials", // can be null, use-credentials or anonymous
+				crossorigin: "use-credentials",
 				icons: [
 					{
-						src: path.resolve("src/assets/icon.png"),
+						src: path.resolve("client/src/assets/icon.png"),
 						sizes: [96, 128, 192, 256, 384, 512],
 						destination: path.join("assets", "icons"),
 					},
 				],
 			}),
 			new InjectManifest({
-				swSrc: "./src/service-worker.js",
+				swSrc: "./client/src/service-worker.js",
 			}),
 		],
-
 		module: {
 			rules: [
 				{
